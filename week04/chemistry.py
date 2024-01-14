@@ -1,5 +1,7 @@
 from formula import parse_formula
 
+#Added a function that creates a known molecules dictionary and a function that checks the entered chemical formula against this dictionary and returns the name of the formula
+
 # Indexes for inner lists in the periodic table
 NAME_INDEX = 0
 ATOMIC_MASS_INDEX = 1
