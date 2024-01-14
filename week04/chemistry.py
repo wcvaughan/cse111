@@ -16,21 +16,44 @@ def main():
 
     periodic_table_dict = make_periodic_table()
 
+    known_molecules_dict = make_known_molecules_dict()
+
+    chemical_formula_name = get_formula_name(sample_chemical_formula, known_molecules_dict)
+
     symbol_quantity_list = parse_formula(sample_chemical_formula, periodic_table_dict)
 
     molar_mass = compute_molar_mass(symbol_quantity_list, periodic_table_dict)
+
+    print(f'{chemical_formula_name}')
 
     print(f'{molar_mass} grams/mole')
 
     moles = sample_mass / molar_mass
 
-    print(f'{moles} moles')
+    print(f'{moles:.5f} moles')
 
     # for item in periodic_table_dict.items():
     #     chemical_name = item[NAME_INDEX]
     #     atomic_mass = item[ATOMIC_MASS_INDEX]
     #     print(f'{chemical_name} {atomic_mass} ' )
     pass
+
+def get_formula_name(formula, known_molecules_dict):
+    """Try to find formula in the known_molecules_dict.
+    If formula is in the known_molecules_dict, return
+    the name of the chemical formula; otherwise return
+    "unknown compound".
+
+    Parameters
+        formula is a string that contains a chemical formula
+        known_molecules_dict is a dictionary that contains
+            known chemical formulas and their names
+    Return: the name of a chemical formula
+    """
+    if formula in known_molecules_dict:
+        chemical_formula_name = known_molecules_dict[formula]
+
+    return chemical_formula_name
 
 def compute_molar_mass(symbol_quantity_list, periodic_table_dict):
     """Compute and return the total molar mass of all the
@@ -52,18 +75,17 @@ def compute_molar_mass(symbol_quantity_list, periodic_table_dict):
     1.00794 * 2 + 15.9994 * 1
     18.01528
     """
+    total_molar_mass = 0
     # Do the following for each inner list in the
     # compound symbol_quantity_list:
         # Separate the inner list into symbol and quantity.
-    total_molar_mass = 0
-
-    for item in symbol_quantity_list:
-        symbol = symbol_quantity_list[SYMBOL_INDEX]
-        quantity = symbol_quantity_list[QUANTITY_INDEX]
-        
+    for compound in symbol_quantity_list:
+        symbol = compound[SYMBOL_INDEX]
+        quantity =compound[QUANTITY_INDEX]
         # Get the atomic mass for the symbol from the dictionary.
-        element = periodic_table_dict[symbol]
-        atomic_mass = element[ATOMIC_MASS_INDEX]
+        if symbol in periodic_table_dict:
+            element_info = periodic_table_dict[symbol]
+            atomic_mass = element_info[ATOMIC_MASS_INDEX]
         # Multiply the atomic mass by the quantity.
         molar_mass = atomic_mass * quantity
         # Add the product into the total molar mass.
@@ -74,7 +96,28 @@ def compute_molar_mass(symbol_quantity_list, periodic_table_dict):
 
     return total_molar_mass
 
+def make_known_molecules_dict():
 
+    known_molecules_dict = {
+        "Al2O3": "aluminum oxide",
+        "CH3OH": "methanol",
+        "C2H6O": "ethanol",
+        "C2H5OH": "ethanol",
+        "C3H8O": "isopropyl alcohol",
+        "C3H8": "propane",
+        "C4H10": "butane",
+        "C6H6": "benzene",
+        "C6H14": "hexane",
+        "C8H18": "octane",
+        "CH3(CH2)6CH3": "octane",
+        "C13H18O2": "ibuprofen",
+        "C13H16N2O2": "melatonin",
+        "Fe2O3": "iron oxide",
+        "FeS2": "iron pyrite",
+        "H2O": "water"
+    }
+
+    return known_molecules_dict
 def make_periodic_table():
 
     periodic_table_dict = {
