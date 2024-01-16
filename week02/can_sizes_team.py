@@ -1,7 +1,7 @@
 import math
 
-
 def main():
+
     items = [
         {"name": "#1 Picnic", "radius": 6.83, "height": 10.16, "cost_per_can": 0.28},
         {"name": "#1 Tall", "radius": 7.78, "height": 11.91, "cost_per_can": 0.43},
@@ -19,8 +19,6 @@ def main():
 
     storage_efficiency_greatest = 0
 
-    cost_efficiency_greatest = 0
-
     for item in items:
         radius = item["radius"]
         height = item["height"]
@@ -31,40 +29,36 @@ def main():
 
         surface_area = compute_surface_area(radius, height)
 
-        storage_efficiency = compute_storage_efficiency(volume, surface_area)
+        storage_efficieny = compute_storage_efficiency(volume, surface_area)
 
-        cost_efficiency = compute_cost_efficiency(volume, cost)
-
-        print(f"{name} {volume} {surface_area}")
-
-
+        if storage_efficieny < 100:
+            storage_efficiency_greatest = storage_efficieny
+            name = item["name"]
+        print(f"{name}")
+        print(f"{volume}")
         
     print(f"{name} {storage_efficiency_greatest:.2f}")
-    print(f'{name} {cost_efficiency_greatest:.2f}')
+    
     pass
 
 def compute_volume(radius, height):
-
-    volume = math.pi * (radius**2) * height    
-    
+   
+    volume = math.pi * (radius**2) * height   
+   
     return volume
 
 def compute_surface_area(radius, height):
-    
+
     surface_area = 2 * math.pi * radius * (radius + height)
-    
+
     return surface_area
 
 def compute_storage_efficiency(volume, surface_area):
-    
+
     storage_efficiency = volume / surface_area
 
     return storage_efficiency
 
-def compute_cost_efficiency(volume, cost):
-    
-    cost_effiency = volume / cost
 
-    return cost_effiency
 
-main()
+
