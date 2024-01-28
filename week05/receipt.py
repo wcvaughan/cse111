@@ -1,3 +1,6 @@
+""" ADDITIONAL CREATIVITY
+Included a discount for if the current day is either Tuesday or Wednesday and printed the discount amount
+"""
 import csv
 from datetime import datetime
 
@@ -13,9 +16,6 @@ Get the current date and time from your computer’s operating system and print 
 Include a try block and except blocks to handle FileNotFoundError, PermissionError, and KeyError.
 """
 
-"""
-Included a discount for if the current day is either Tuesday or Wednesday and printed the discount amount
-"""
 
 def main():
 
