@@ -8,6 +8,7 @@ def main():
     student_dictionary = read_dictionary(student_file)
 
     user_request = int(input("Enter a student I-Number: "))
+    user_request = user_request.replace("-", "")
     if user_request in student_dictionary:
         name = student_dictionary[user_request]
         print(name)
