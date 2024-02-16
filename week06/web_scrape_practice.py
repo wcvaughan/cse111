@@ -1,13 +1,22 @@
-"""Web scraper practice"""
+from urllib.request import urlopen as uReq
+from bs4 import BeautifulSoup as soup
 
-from urllib.request import urlopen
-import requests
-import re
+my_url = "https://books.toscrape.com/index.html"
 
-url = "https://wcvaughan.github.io/wdd130/wwr/"
-response = requests.get(url)
+#Opening up connection, grabbing the page
+uClient = uReq(my_url)
 
-if response.status_code == 200:
-    
-else:
-    print(f"Failed to retrieve the webpage. Status code: {response.status_code}")
+page_html = uClient.read()
+
+#Close the connection
+uClient.close()
+
+#html parsing
+page_soup = soup(page_html, "html.parser")
+
+#Find all containers of class "item-container"
+containers = page_soup.findAll("article", {"class":"product_pod"})
+
+for container in containers:
+    book_title = container.div.a.img["alt"]
+
